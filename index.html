@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Michi - Mi Mascota Virtual</title>
+  <title>Dogui - Mi Mascota Virtual</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,13 +13,15 @@
       user-select: none;
       -webkit-user-select: none;
       -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
     }
 
     html, body {
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: radial-gradient(circle at center, #fffbeb 0%, #fef3c7 100%);
+      /* Fondo amarillo pastel suave */
+      background: radial-gradient(circle at center, #fefce8 0%, #fef9c3 100%);
     }
 
     body {
@@ -28,43 +30,6 @@
       justify-content: space-between;
       align-items: center;
       padding: 16px 16px max(20px, env(safe-area-inset-bottom));
-      position: relative;
-    }
-
-    /* Estilo para la foto Polaroid colgando en el fondo */
-    .polaroid-fondo {
-      position: absolute;
-      top: 15px;
-      left: 20px;
-      background: #ffffff;
-      padding: 8px 8px 24px 8px;
-      width: 95px;
-      box-shadow: 0 6px 15px rgba(180, 83, 9, 0.15);
-      transform: rotate(-6deg);
-      z-index: 1; /* Detrás de la interfaz principal */
-      pointer-events: none; /* Para que no bloquee ningún toque */
-      border: 1px solid #f3e8ff;
-    }
-
-    .polaroid-fondo img {
-      width: 100%;
-      height: 85px;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Pequeña chincheta o cinta arriba de la polaroid */
-    .polaroid-fondo::before {
-      content: '';
-      position: absolute;
-      top: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 12px;
-      height: 12px;
-      background: #d97706;
-      border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
     .bg-particle {
@@ -73,7 +38,6 @@
       border-radius: 50%;
       pointer-events: none;
       animation: floatBg 8s infinite ease-in-out;
-      z-index: 1;
     }
 
     @keyframes floatBg {
@@ -92,7 +56,7 @@
     }
 
     .nombre-mascota {
-      color: #b45309;
+      color: #78350f; /* Marrón chocolate */
       font-size: 24px;
       font-weight: 900;
       letter-spacing: 1px;
@@ -105,7 +69,7 @@
       background: rgba(255, 255, 255, 0.9);
       padding: 10px 14px;
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(180, 83, 9, 0.08);
+      box-shadow: 0 4px 12px rgba(120, 53, 15, 0.08);
       border: 2px solid rgba(255, 255, 255, 0.8);
     }
 
@@ -125,7 +89,7 @@
     }
 
     .progreso-track {
-      background: #fde68a;
+      background: #fef08a;
       height: 10px;
       border-radius: 10px;
       overflow: hidden;
@@ -139,8 +103,8 @@
       transition: width 0.4s ease;
     }
 
-    #fill-hambre { background: linear-gradient(90deg, #34d399, #10b981); }
-    #fill-felicidad { background: linear-gradient(90deg, #f59e0b, #d97706); }
+    #fill-hambre { background: linear-gradient(90deg, #f97316, #ea580c); /* Naranja vibrante */ }
+    #fill-felicidad { background: linear-gradient(90deg, #fb923c, #c2410c); /* Naranja terracota cálido */ }
 
     .stage {
       flex: 1;
@@ -162,10 +126,10 @@
       font-weight: 700;
       font-size: 12px;
       line-height: 1.4;
-      box-shadow: 0 6px 16px rgba(180, 83, 9, 0.1);
+      box-shadow: 0 6px 16px rgba(120, 53, 15, 0.1);
       margin-bottom: 12px;
       position: relative;
-      border: 2px solid #f59e0b;
+      border: 2px solid #d97706;
       max-width: 90%;
       text-align: center;
     }
@@ -182,11 +146,12 @@
     }
 
     .michi-wrapper {
-      width: 150px;
-      height: 150px;
+      width: 160px;
+      height: 160px;
       cursor: pointer;
       position: relative;
       animation: floatIdle 3.5s infinite ease-in-out;
+      outline: none;
     }
 
     @keyframes floatIdle {
@@ -222,23 +187,23 @@
       z-index: 15;
     }
 
-    .anim-fish { animation: dropFish 0.6s forwards; }
-    @keyframes dropFish {
+    .anim-bowl { animation: dropBowl 0.6s forwards; }
+    @keyframes dropBowl {
       0% { transform: translateY(-80px) scale(1.2); opacity: 1; }
       100% { transform: translateY(10px) scale(0.4); opacity: 0; }
     }
 
-    .anim-ball { animation: throwBall 0.8s forwards; }
-    @keyframes throwBall {
-      0% { transform: translate(-100px, 40px) scale(1); }
-      50% { transform: translate(-20px, -30px) scale(1.2); }
-      100% { transform: translate(0px, 10px) scale(0.2); opacity: 0; }
+    .anim-frisbee { animation: throwFrisbee 0.8s forwards; }
+    @keyframes throwFrisbee {
+      0% { transform: translate(-100px, 40px) scale(1) rotate(0deg); }
+      50% { transform: translate(-20px, -30px) scale(1.2) rotate(180deg); }
+      100% { transform: translate(0px, 10px) scale(0.2) rotate(360deg); opacity: 0; }
     }
 
     .shadow {
       width: 100px;
       height: 12px;
-      background: rgba(180, 83, 9, 0.15);
+      background: rgba(120, 53, 15, 0.15);
       border-radius: 50%;
       margin-top: 6px;
     }
@@ -251,14 +216,14 @@
       background: #ffffff;
       padding: 8px;
       border-radius: 18px;
-      box-shadow: 0 6px 18px rgba(180, 83, 9, 0.15);
-      border: 2px solid #f59e0b;
+      box-shadow: 0 6px 18px rgba(120, 53, 15, 0.15);
+      border: 2px solid #d97706;
       z-index: 20;
     }
 
     .btn {
       flex: 1;
-      background: #fff3c4;
+      background: #fef9c3;
       color: #78350f;
       border: none;
       padding: 12px;
@@ -272,11 +237,12 @@
       gap: 8px;
       touch-action: manipulation;
       transition: background 0.2s ease, transform 0.1s ease;
+      outline: none;
     }
 
     .btn:active {
       transform: scale(0.95);
-      background: #fde68a;
+      background: #fef08a;
     }
 
     .btn-icon { font-size: 18px; }
@@ -296,16 +262,11 @@
 </head>
 <body>
 
-  <!-- Foto Polaroid en el fondo -->
-  <div class="polaroid-fondo">
-    <img src="752761622_18074629694700593_2327483800002753203_n.jpg" alt="Recuerdo">
-  </div>
-
   <div class="bg-particle" style="width: 70px; height: 70px; top: 10%; left: 5%;"></div>
   <div class="bg-particle" style="width: 100px; height: 100px; top: 50%; right: 5%;"></div>
 
   <div class="top-panel">
-    <div class="nombre-mascota">Michi</div>
+    <div class="nombre-mascota">Dogui</div>
 
     <div class="barras-container">
       <div class="barra-item">
@@ -320,32 +281,38 @@
   </div>
 
   <div class="stage" id="stage-area">
-    <div class="speech-bubble" id="bocadillo">¡Hola! Tócame para mimarme o aprender algo nuevo 🐾</div>
+    <div class="speech-bubble" id="bocadillo">¡Guau! ¡Tócame para recibir cariño o aprender algo útil! 🐾</div>
     
+    <!-- SVG de un Perro tierno estándar -->
     <div class="michi-wrapper" id="michi-box" onclick="acariciar(event)">
       <svg id="michi-svg" viewBox="0 0 100 100" width="100%" height="100%">
-        <path d="M 75 75 Q 92 60 85 45" fill="none" stroke="#e67e22" stroke-width="5" stroke-linecap="round"/>
-        <ellipse cx="28" cy="78" rx="7" ry="5" fill="#ffffff" stroke="#d35400" stroke-width="1"/>
-        <ellipse cx="72" cy="78" rx="7" ry="5" fill="#ffffff" stroke="#d35400" stroke-width="1"/>
-        <polygon points="22,40 12,18 36,28" fill="#e67e22" stroke="#d35400" stroke-width="1.5"/>
-        <polygon points="24,36 17,22 33,28" fill="#f2a685"/>
-        <polygon points="78,40 88,18 64,28" fill="#e67e22" stroke="#d35400" stroke-width="1.5"/>
-        <polygon points="76,36 83,22 67,28" fill="#f2a685"/>
-        <ellipse cx="50" cy="58" rx="32" ry="28" fill="#e67e22" stroke="#d35400" stroke-width="2"/>
-        <path d="M 50 42 C 40 46 38 62 38 72 C 44 80 56 80 62 72 C 62 62 60 46 50 42 Z" fill="#ffffff"/>
-        <polygon points="48,59 52,59 50,62" fill="#e8a7a1"/>
+        <!-- Orejas colgantes de perrito -->
+        <path d="M 28 42 C 18 50 22 72 30 70 C 35 68 35 55 33 45 Z" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+        <path d="M 72 42 C 82 50 78 72 70 70 C 65 68 65 55 67 45 Z" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+        
+        <!-- Cabeza y cuerpo -->
+        <circle cx="50" cy="58" r="28" fill="#d97706" stroke="#78350f" stroke-width="2"/>
+        <circle cx="50" cy="42" r="22" fill="#d97706" stroke="#78350f" stroke-width="2"/>
+        
+        <!-- Mancha en el ojo / detalles de perrito -->
+        <ellipse cx="50" cy="48" rx="11" ry="9" fill="#fefce8"/>
+        <ellipse cx="50" cy="46" rx="4" ry="3" fill="#1f110b"/>
+        
+        <!-- Ojos -->
         <g id="ojos">
-          <circle cx="37" cy="53" r="5" fill="#5c3d2e"/>
-          <circle cx="37" cy="53" r="3" fill="#1f110b"/>
-          <circle cx="35.5" cy="51.5" r="1.2" fill="#ffffff"/>
-          <circle cx="63" cy="53" r="5" fill="#5c3d2e"/>
-          <circle cx="63" cy="53" r="3" fill="#1f110b"/>
-          <circle cx="61.5" cy="51.5" r="1.2" fill="#ffffff"/>
+          <circle cx="39" cy="38" r="4" fill="#1f110b"/>
+          <circle cx="37.8" cy="36.8" r="1.2" fill="#ffffff"/>
+          <circle cx="61" cy="38" r="4" fill="#1f110b"/>
+          <circle cx="59.8" cy="36.8" r="1.2" fill="#ffffff"/>
         </g>
-        <path id="boca" d="M 45 64 Q 50 67 55 64" fill="none" stroke="#2c3e50" stroke-width="1.8" stroke-linecap="round"/>
+        
+        <!-- Lengüita feliz -->
+        <path id="boca" d="M 45 53 Q 50 57 55 53" fill="none" stroke="#1f110b" stroke-width="1.8" stroke-linecap="round"/>
+        
+        <!-- Patitas -->
         <g id="patitas">
-          <ellipse cx="42" cy="78" rx="5" ry="4" fill="#ffffff" stroke="#d35400" stroke-width="1"/>
-          <ellipse cx="58" cy="78" rx="5" ry="4" fill="#ffffff" stroke="#d35400" stroke-width="1"/>
+          <ellipse cx="40" cy="80" rx="6" ry="5" fill="#fefce8" stroke="#78350f" stroke-width="1"/>
+          <ellipse cx="60" cy="80" rx="6" ry="5" fill="#fefce8" stroke="#78350f" stroke-width="1"/>
         </g>
       </svg>
     </div>
@@ -355,18 +322,18 @@
 
   <div class="controls">
     <button class="btn" id="btn-comer" onclick="alimentar()">
-      <span class="btn-icon">🐟</span>
-      <span>Comer</span>
+      <span class="btn-icon">🥣</span>
+      <span>Alimentar</span>
     </button>
     <button class="btn" id="btn-jugar" onclick="jugar()">
-      <span class="btn-icon">🎾</span>
+      <span class="btn-icon">🥏</span>
       <span>Jugar</span>
     </button>
   </div>
 
   <script>
-    let hambre = parseInt(localStorage.getItem('michi_v9_hambre')) || 100;
-    let felicidad = parseInt(localStorage.getItem('michi_v9_felicidad')) || 100;
+    let hambre = parseInt(localStorage.getItem('dogui_hambre')) || 100;
+    let felicidad = parseInt(localStorage.getItem('dogui_felicidad')) || 100;
 
     const fillHambre = document.getElementById('fill-hambre');
     const fillFelicidad = document.getElementById('fill-felicidad');
@@ -379,37 +346,34 @@
     const stageArea = document.getElementById('stage-area');
 
     const frasesComer = [
-      "🐟 ¡Mmm... delicioso!",
-      "🐱 ¡Gracias por la comida!",
-      "😋 Mi pancita está feliz.",
-      "🐟 ¡Ñam ñam, qué rico!"
+      "🥣 ¡Mmm... qué rica comida!",
+      "🐶 ¡Guau, gracias por mi alimento!",
+      "😋 ¡Mi pancita está muy contenta!",
+      "🥣 ¡Ñam ñam, qué rico!"
     ];
 
     const frasesJugar = [
-      "🎾 ¡Sí! Me encanta este juego.",
-      "😸 ¡Qué divertido!",
-      "🎾 ¡Atrapé la pelota!",
-      "🐾 ¡Buen tiro!"
+      "🥏 ¡Guau! ¡Atrapé el frisbee en el aire!",
+      "🐾 ¡Me encanta correr contigo!",
+      "🥏 ¡Qué divertido juego!",
+      "🏃‍♂️ ¡Eres el mejor compañero!"
     ];
 
-    const sabiduriaGatuna = [
-      "💡 Cuidado real: Nunca le des leche de vaca a un gato adulto, no la digieren bien.",
-      "💡 Cuidado real: Los lirios son extremadamente tóxicos para los gatos, evita tenerlos en casa.",
-      "💡 Cuidado real: Los gatos prefieren su agua limpia, fresca y alejada de su plato de comida.",
-      "💡 Cuidado real: Cepillar a tu gato seguido evita la acumulación peligrosa de bolas de pelo.",
-      "💡 Cuidado real: Nunca les des cebolla, ajo ni chocolate; son alimentos muy nocivos para ellos.",
-      "💡 Cuidado real: Jugar 15 minutos al día previene el estrés, la ansiedad y el sobrepeso.",
-      "💡 Cuidado real: Las rascaderas son necesarias para que mantengan sus uñas sanas y liberen tensión.",
-      "📜 Curiosidad: En el Antiguo Egipto los gatos eran sagrados y protegían los granos de las plagas.",
-      "📜 Curiosidad: El maullido fue desarrollado por los gatos casi en su totalidad para comunicarse con humanos.",
-      "📜 Curiosidad: Los bigotes de los gatos miden el ancho de su cuerpo y les sirven para orientarse en la oscuridad.",
-      "📜 Curiosidad: Un gato puede saltar hasta seis veces la longitud de su propio cuerpo.",
-      "📜 Curiosidad: El ronroneo acelera la curación de sus huesos y músculos debido a su frecuencia de vibración."
+    const sabiduriaCanina = [
+      "💡 Cuidado real: Los perros necesitan agua fresca y limpia disponible todo el día.",
+      "💡 Cuidado real: Nunca les des chocolate, uvas, cebolla ni ajo; son veneno para su salud.",
+      "💡 Cuidado real: Sacar a pasear a tu perro estimula su mente y previene la ansiedad en casa.",
+      "💡 Cuidado real: Cepillar su pelaje de forma regular mantiene su piel sana y sin enredos.",
+      "💡 Cuidado real: Los perros demuestran afecto buscando el contacto físico y moviendo la cola.",
+      "📜 Curiosidad: El sentido del olfato de un perro puede ser hasta 100.000 veces más potente que el humano.",
+      "📜 Curiosidad: Los perros sudan principalmente a través de las almohadillas de sus patas.",
+      "📜 Curiosidad: Mueven la cola hacia la derecha cuando están felices y hacia la izquierda si están inseguros.",
+      "📜 Curiosidad: Duermen aproximadamente la mitad de su vida entre siestas y horas nocturnas."
     ];
 
     function guardar() {
-      localStorage.setItem('michi_v9_hambre', hambre);
-      localStorage.setItem('michi_v9_felicidad', felicidad);
+      localStorage.setItem('dogui_hambre', hambre);
+      localStorage.setItem('dogui_felicidad', felicidad);
     }
 
     function mostrarTexto(msg) {
@@ -428,48 +392,46 @@
 
       if (hambre <= 0 || felicidad <= 0) {
         ojos.innerHTML = `
-          <path d="M 33 55 L 41 49" stroke="#2c3e50" stroke-width="2" stroke-linecap="round"/>
-          <path d="M 33 49 L 41 55" stroke="#2c3e50" stroke-width="2" stroke-linecap="round"/>
-          <path d="M 59 55 L 67 49" stroke="#2c3e50" stroke-width="2" stroke-linecap="round"/>
-          <path d="M 59 49 L 67 55" stroke="#2c3e50" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 36 36 L 42 42" stroke="#1f110b" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 36 42 L 42 36" stroke="#1f110b" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 58 36 L 64 42" stroke="#1f110b" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 58 42 L 64 36" stroke="#1f110b" stroke-width="2" stroke-linecap="round"/>
         `;
-        boca.setAttribute('d', 'M 45 67 Q 50 62 55 67');
+        boca.setAttribute('d', 'M 45 56 Q 50 51 55 56');
         
         if (mensajePersonalizado) {
           mostrarTexto(mensajePersonalizado);
         } else if (hambre <= 0 && felicidad <= 0) {
-          mostrarTexto("😿 ¡Tengo mucha hambre y pena! Toca 'Comer' 🐟 y 'Jugar' 🎾");
+          mostrarTexto("😿 ¡Tengo hambre y tristeza! Toca 'Alimentar' 🥣 y 'Jugar' 🥏");
         } else if (hambre <= 0) {
-          mostrarTexto("😾 ¡No tengo energía! Toca el botón 'Comer' 🐟");
+          mostrarTexto("😾 ¡Tengo mucha hambre! Toca 'Alimentar' 🥣");
         } else {
-          mostrarTexto("😿 Estoy triste... Presiona 'Jugar' 🎾");
+          mostrarTexto("😿 Estoy triste... Presiona 'Jugar' 🥏");
         }
       } else if (hambre < 40 || felicidad < 40) {
         ojos.innerHTML = `
-          <circle cx="37" cy="53" r="3.5" fill="#1f110b"/>
-          <circle cx="63" cy="53" r="3.5" fill="#1f110b"/>
+          <circle cx="39" cy="38" r="3" fill="#1f110b"/>
+          <circle cx="61" cy="38" r="3" fill="#1f110b"/>
         `;
-        boca.setAttribute('d', 'M 45 65 L 55 65');
+        boca.setAttribute('d', 'M 45 54 L 55 54');
         
         if (mensajePersonalizado) {
           mostrarTexto(mensajePersonalizado);
         } else if (hambre < 40 && felicidad < 40) {
-          mostrarTexto("🙀 Presiona 'Comer' 🐟 para alimentarme y 'Jugar' 🎾 para alegrarme.");
+          mostrarTexto("🙀 Presiona 'Alimentar' 🥣 y 'Jugar' 🥏 para alegrarme.");
         } else if (hambre < 40) {
-          mostrarTexto("😾 Tengo hambre... ¡Presiona el botón 'Comer' 🐟!");
+          mostrarTexto("😾 ¡Siento un poco de hambre! Presiona 'Alimentar' 🥣");
         } else {
-          mostrarTexto("😿 Me estoy aburriendo... Presiona 'Jugar' 🎾.");
+          mostrarTexto("😿 Me estoy aburriendo... Presiona 'Jugar' 🥏.");
         }
       } else {
         ojos.innerHTML = `
-          <circle cx="37" cy="53" r="5" fill="#5c3d2e"/>
-          <circle cx="37" cy="53" r="3" fill="#1f110b"/>
-          <circle cx="35.5" cy="51.5" r="1.2" fill="#ffffff"/>
-          <circle cx="63" cy="53" r="5" fill="#5c3d2e"/>
-          <circle cx="63" cy="53" r="3" fill="#1f110b"/>
-          <circle cx="61.5" cy="51.5" r="1.2" fill="#ffffff"/>
+          <circle cx="39" cy="38" r="4" fill="#1f110b"/>
+          <circle cx="37.8" cy="36.8" r="1.2" fill="#ffffff"/>
+          <circle cx="61" cy="38" r="4" fill="#1f110b"/>
+          <circle cx="59.8" cy="36.8" r="1.2" fill="#ffffff"/>
         `;
-        boca.setAttribute('d', 'M 45 64 Q 50 67 55 64');
+        boca.setAttribute('d', 'M 45 53 Q 50 57 55 53');
         if (mensajePersonalizado) {
           mostrarTexto(mensajePersonalizado);
         }
@@ -498,16 +460,16 @@
       if (felicidad < 20) felicidad = Math.min(100, felicidad + 10);
       guardar();
 
-      const fish = document.createElement('div');
-      fish.className = 'animated-item anim-fish';
-      fish.innerText = '🐟';
-      stageArea.appendChild(fish);
+      const bowl = document.createElement('div');
+      bowl.className = 'animated-item anim-bowl';
+      bowl.innerText = '🥣';
+      stageArea.appendChild(bowl);
 
-      boca.setAttribute('d', 'M 44 63 Q 50 72 56 63');
+      boca.setAttribute('d', 'M 45 52 Q 50 60 55 52');
 
       setTimeout(() => {
         triggerAnim('eat-wiggle');
-        fish.remove();
+        bowl.remove();
         actualizarInterfaz(obtenerElementoAleatorio(frasesComer));
       }, 500);
     }
@@ -517,17 +479,17 @@
       hambre = Math.max(0, hambre - 5);
       guardar();
 
-      const ball = document.createElement('div');
-      ball.className = 'animated-item anim-ball';
-      ball.innerText = '🎾';
-      stageArea.appendChild(ball);
+      const frisbee = document.createElement('div');
+      frisbee.className = 'animated-item anim-frisbee';
+      frisbee.innerText = '🥏';
+      stageArea.appendChild(frisbee);
 
       setTimeout(() => {
         triggerAnim('catch-ball');
       }, 200);
 
       setTimeout(() => {
-        ball.remove();
+        frisbee.remove();
         actualizarInterfaz(obtenerElementoAleatorio(frasesJugar));
       }, 700);
     }
@@ -538,7 +500,7 @@
       if (hambre < 40 || felicidad < 40) {
         actualizarInterfaz();
       } else {
-        actualizarInterfaz(obtenerElementoAleatorio(sabiduriaGatuna));
+        actualizarInterfaz(obtenerElementoAleatorio(sabiduriaCanina));
       }
     }
 
