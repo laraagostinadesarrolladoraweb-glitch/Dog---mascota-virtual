@@ -20,8 +20,8 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      /* Fondo cálido crema/dorado */
-      background: radial-gradient(circle at center, #fefce8 0%, #fef08a 100%);
+      /* Fondo actualizado a amarillo pastel suave */
+      background: radial-gradient(circle at center, #fefce8 0%, #fef9c3 100%);
     }
 
     body {
@@ -56,7 +56,7 @@
     }
 
     .nombre-mascota {
-      color: #78350f; /* Marrón tostado */
+      color: #78350f; /* Marrón chocolate */
       font-size: 24px;
       font-weight: 900;
       letter-spacing: 1px;
@@ -83,7 +83,7 @@
     .barra-label {
       font-size: 11px;
       font-weight: 800;
-      color: #92400e;
+      color: #78350f;
       display: flex;
       justify-content: space-between;
     }
@@ -103,10 +103,8 @@
       transition: width 0.4s ease;
     }
 
-    /* Hambre: Marrón ámbar cálido */
-    #fill-hambre { background: linear-gradient(90deg, #d97706, #b45309); }
-    /* Felicidad: Naranja brillante y cálido (fuera de rojo, verde, azul, morado/celeste) */
-    #fill-felicidad { background: linear-gradient(90deg, #fb923c, #ea580c); }
+    #fill-hambre { background: linear-gradient(90deg, #f97316, #ea580c); /* Naranja vibrante */ }
+    #fill-felicidad { background: linear-gradient(90deg, #0ea5e9, #0284c7); /* Turquesa/Celeste claro */ }
 
     .stage {
       flex: 1;
@@ -131,7 +129,7 @@
       box-shadow: 0 6px 16px rgba(120, 53, 15, 0.1);
       margin-bottom: 12px;
       position: relative;
-      border: 2px solid #f59e0b; /* Borde dorado */
+      border: 2px solid #d97706;
       max-width: 90%;
       text-align: center;
     }
@@ -219,13 +217,13 @@
       padding: 8px;
       border-radius: 18px;
       box-shadow: 0 6px 18px rgba(120, 53, 15, 0.15);
-      border: 2px solid #f59e0b;
+      border: 2px solid #d97706;
       z-index: 20;
     }
 
     .btn {
       flex: 1;
-      background: #fef3c7; /* Fondo amarillo cálido para botones */
+      background: #fef9c3; /* Amarillo pastel claro en el botón */
       color: #78350f;
       border: none;
       padding: 12px;
@@ -244,7 +242,7 @@
 
     .btn:active {
       transform: scale(0.95);
-      background: #fde68a;
+      background: #fef08a;
     }
 
     .btn-icon { font-size: 18px; }
@@ -283,21 +281,21 @@
   </div>
 
   <div class="stage" id="stage-area">
-    <div class="speech-bubble" id="bocadillo">¡Guau! ¡Tócame para recibir cariño o aprender algo útil! 🐾</div>
+    <div class="speech-bubble" id="bocadillo">¡Hola! Tócame para recibir cariño o aprender algo nuevo 🐾</div>
     
-    <!-- SVG del perrito con trazos marrones y ámbar -->
+    <!-- SVG de un Perro tierno estándar -->
     <div class="michi-wrapper" id="michi-box" onclick="acariciar(event)">
       <svg id="michi-svg" viewBox="0 0 100 100" width="100%" height="100%">
         <!-- Orejas colgantes de perrito -->
-        <path d="M 28 42 C 18 50 22 72 30 70 C 35 68 35 55 33 45 Z" fill="#92400e" stroke="#451a03" stroke-width="1.5"/>
-        <path d="M 72 42 C 82 50 78 72 70 70 C 65 68 65 55 67 45 Z" fill="#92400e" stroke="#451a03" stroke-width="1.5"/>
+        <path d="M 28 42 C 18 50 22 72 30 70 C 35 68 35 55 33 45 Z" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+        <path d="M 72 42 C 82 50 78 72 70 70 C 65 68 65 55 67 45 Z" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
         
         <!-- Cabeza y cuerpo -->
-        <circle cx="50" cy="58" r="28" fill="#b45309" stroke="#78350f" stroke-width="2"/>
-        <circle cx="50" cy="42" r="22" fill="#b45309" stroke="#78350f" stroke-width="2"/>
+        <circle cx="50" cy="58" r="28" fill="#d97706" stroke="#78350f" stroke-width="2"/>
+        <circle cx="50" cy="42" r="22" fill="#d97706" stroke="#78350f" stroke-width="2"/>
         
         <!-- Mancha en el ojo / detalles de perrito -->
-        <ellipse cx="50" cy="48" rx="11" ry="9" fill="#fef3c7"/>
+        <ellipse cx="50" cy="48" rx="11" ry="9" fill="#fefce8"/>
         <ellipse cx="50" cy="46" rx="4" ry="3" fill="#1f110b"/>
         
         <!-- Ojos -->
@@ -313,8 +311,8 @@
         
         <!-- Patitas -->
         <g id="patitas">
-          <ellipse cx="40" cy="80" rx="6" ry="5" fill="#fef3c7" stroke="#78350f" stroke-width="1"/>
-          <ellipse cx="60" cy="80" rx="6" ry="5" fill="#fef3c7" stroke="#78350f" stroke-width="1"/>
+          <ellipse cx="40" cy="80" rx="6" ry="5" fill="#fefce8" stroke="#78350f" stroke-width="1"/>
+          <ellipse cx="60" cy="80" rx="6" ry="5" fill="#fefce8" stroke="#78350f" stroke-width="1"/>
         </g>
       </svg>
     </div>
