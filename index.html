@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Doggie - Mi Mascota Virtual</title>
+  <title>Dogui - Mi Mascota Virtual</title>
   <style>
     * {
       box-sizing: border-box;
@@ -12,7 +12,7 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       user-select: none;
       -webkit-user-select: none;
-      -webkit-tap-highlight-color: transparent; /* Elimina el recuadro azul al tocar en móviles */
+      -webkit-tap-highlight-color: transparent;
       -webkit-touch-callout: none;
     }
 
@@ -20,7 +20,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: radial-gradient(circle at center, #f0fdf4 0%, #dcfce7 100%);
+      background: radial-gradient(circle at center, #fff7ed 0%, #ffedd5 100%);
     }
 
     body {
@@ -55,7 +55,7 @@
     }
 
     .nombre-mascota {
-      color: #15803d;
+      color: #c2410c;
       font-size: 24px;
       font-weight: 900;
       letter-spacing: 1px;
@@ -68,7 +68,7 @@
       background: rgba(255, 255, 255, 0.9);
       padding: 10px 14px;
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(21, 128, 61, 0.08);
+      box-shadow: 0 4px 12px rgba(194, 65, 12, 0.08);
       border: 2px solid rgba(255, 255, 255, 0.8);
     }
 
@@ -82,13 +82,13 @@
     .barra-label {
       font-size: 11px;
       font-weight: 800;
-      color: #166534;
+      color: #9a3412;
       display: flex;
       justify-content: space-between;
     }
 
     .progreso-track {
-      background: #bbf7d0;
+      background: #fed7aa;
       height: 10px;
       border-radius: 10px;
       overflow: hidden;
@@ -103,7 +103,7 @@
     }
 
     #fill-hambre { background: linear-gradient(90deg, #34d399, #10b981); }
-    #fill-felicidad { background: linear-gradient(90deg, #38bdf8, #0284c7); }
+    #fill-felicidad { background: linear-gradient(90deg, #38bdf8, #0284c7); } /* Cambiado a turquesa/celeste vibrante */
 
     .stage {
       flex: 1;
@@ -119,16 +119,16 @@
 
     .speech-bubble {
       background: #ffffff;
-      color: #166534;
+      color: #9a3412;
       padding: 10px 16px;
       border-radius: 16px;
       font-weight: 700;
       font-size: 12px;
       line-height: 1.4;
-      box-shadow: 0 6px 16px rgba(21, 128, 61, 0.1);
+      box-shadow: 0 6px 16px rgba(194, 65, 12, 0.1);
       margin-bottom: 12px;
       position: relative;
-      border: 2px solid #22c55e;
+      border: 2px solid #fb923c;
       max-width: 90%;
       text-align: center;
     }
@@ -150,7 +150,7 @@
       cursor: pointer;
       position: relative;
       animation: floatIdle 3.5s infinite ease-in-out;
-      outline: none; /* Elimina borde de enfoque predeterminado */
+      outline: none;
     }
 
     @keyframes floatIdle {
@@ -186,23 +186,23 @@
       z-index: 15;
     }
 
-    .anim-bone { animation: dropBone 0.6s forwards; }
-    @keyframes dropBone {
+    .anim-bowl { animation: dropBowl 0.6s forwards; }
+    @keyframes dropBowl {
       0% { transform: translateY(-80px) scale(1.2); opacity: 1; }
       100% { transform: translateY(10px) scale(0.4); opacity: 0; }
     }
 
-    .anim-ball { animation: throwBall 0.8s forwards; }
-    @keyframes throwBall {
-      0% { transform: translate(-100px, 40px) scale(1); }
-      50% { transform: translate(-20px, -30px) scale(1.2); }
-      100% { transform: translate(0px, 10px) scale(0.2); opacity: 0; }
+    .anim-frisbee { animation: throwFrisbee 0.8s forwards; }
+    @keyframes throwFrisbee {
+      0% { transform: translate(-100px, 40px) scale(1) rotate(0deg); }
+      50% { transform: translate(-20px, -30px) scale(1.2) rotate(180deg); }
+      100% { transform: translate(0px, 10px) scale(0.2) rotate(360deg); opacity: 0; }
     }
 
     .shadow {
       width: 100px;
       height: 12px;
-      background: rgba(21, 128, 61, 0.15);
+      background: rgba(194, 65, 12, 0.15);
       border-radius: 50%;
       margin-top: 6px;
     }
@@ -215,15 +215,15 @@
       background: #ffffff;
       padding: 8px;
       border-radius: 18px;
-      box-shadow: 0 6px 18px rgba(21, 128, 61, 0.15);
-      border: 2px solid #22c55e;
+      box-shadow: 0 6px 18px rgba(194, 65, 12, 0.15);
+      border: 2px solid #fb923c;
       z-index: 20;
     }
 
     .btn {
       flex: 1;
-      background: #dcfce7;
-      color: #166534;
+      background: #ffedd5;
+      color: #9a3412;
       border: none;
       padding: 12px;
       border-radius: 14px;
@@ -241,7 +241,7 @@
 
     .btn:active {
       transform: scale(0.95);
-      background: #bbf7d0;
+      background: #fed7aa;
     }
 
     .btn-icon { font-size: 18px; }
@@ -265,7 +265,7 @@
   <div class="bg-particle" style="width: 100px; height: 100px; top: 50%; right: 5%;"></div>
 
   <div class="top-panel">
-    <div class="nombre-mascota">Piru (Caniche)</div>
+    <div class="nombre-mascota">Dogui</div>
 
     <div class="barras-container">
       <div class="barra-item">
@@ -280,41 +280,38 @@
   </div>
 
   <div class="stage" id="stage-area">
-    <div class="speech-bubble" id="bocadillo">¡Guau! ¡Tócame para darme amor o aprender sobre caniches! 🐾</div>
+    <div class="speech-bubble" id="bocadillo">¡Guau! ¡Tócame para recibir cariño o aprender algo útil! 🐾</div>
     
-    <!-- SVG de un Perro Caniche estilizado -->
+    <!-- SVG de un Perro tierno estándar -->
     <div class="michi-wrapper" id="michi-box" onclick="acariciar(event)">
       <svg id="michi-svg" viewBox="0 0 100 100" width="100%" height="100%">
-        <!-- Orejas caídas y pomposas de caniche -->
-        <path d="M 32 45 C 20 50 20 70 28 75 C 32 78 36 65 35 55 Z" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5"/>
-        <path d="M 68 45 C 80 50 80 70 72 75 C 68 78 64 65 65 55 Z" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5"/>
+        <!-- Orejas colgantes de perrito -->
+        <path d="M 28 42 C 18 50 22 72 30 70 C 35 68 35 55 33 45 Z" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
+        <path d="M 72 42 C 82 50 78 72 70 70 C 65 68 65 55 67 45 Z" fill="#b45309" stroke="#78350f" stroke-width="1.5"/>
         
-        <!-- Cuerpo y cabeza rizada -->
-        <circle cx="50" cy="62" r="26" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
-        <circle cx="50" cy="42" r="20" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+        <!-- Cabeza y cuerpo -->
+        <circle cx="50" cy="58" r="28" fill="#d97706" stroke="#b45309" stroke-width="2"/>
+        <circle cx="50" cy="42" r="22" fill="#d97706" stroke="#b45309" stroke-width="2"/>
         
-        <!-- Copete clásico de caniche -->
-        <circle cx="50" cy="24" r="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-        
-        <!-- Hocico -->
-        <ellipse cx="50" cy="48" rx="10" ry="8" fill="#f1f5f9"/>
-        <ellipse cx="50" cy="45" rx="3" ry="2" fill="#1e293b"/>
+        <!-- Mancha en el ojo / detalles de perrito -->
+        <ellipse cx="50" cy="48" rx="11" ry="9" fill="#fef3c7"/>
+        <ellipse cx="50" cy="46" rx="4" ry="3" fill="#1f110b"/>
         
         <!-- Ojos -->
         <g id="ojos">
-          <circle cx="42" cy="38" r="3.5" fill="#1e293b"/>
-          <circle cx="40.8" cy="36.8" r="1" fill="#ffffff"/>
-          <circle cx="58" cy="38" r="3.5" fill="#1e293b"/>
-          <circle cx="56.8" cy="36.8" r="1" fill="#ffffff"/>
+          <circle cx="39" cy="38" r="4" fill="#1f110b"/>
+          <circle cx="37.8" cy="36.8" r="1.2" fill="#ffffff"/>
+          <circle cx="61" cy="38" r="4" fill="#1f110b"/>
+          <circle cx="59.8" cy="36.8" r="1.2" fill="#ffffff"/>
         </g>
         
-        <!-- Boca -->
-        <path id="boca" d="M 46 53 Q 50 57 54 53" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Lengüita feliz -->
+        <path id="boca" d="M 45 53 Q 50 57 55 53" fill="none" stroke="#1f110b" stroke-width="1.8" stroke-linecap="round"/>
         
         <!-- Patitas -->
         <g id="patitas">
-          <ellipse cx="40" cy="83" rx="6" ry="5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
-          <ellipse cx="60" cy="83" rx="6" ry="5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+          <ellipse cx="40" cy="80" rx="6" ry="5" fill="#fef3c7" stroke="#b45309" stroke-width="1"/>
+          <ellipse cx="60" cy="80" rx="6" ry="5" fill="#fef3c7" stroke="#b45309" stroke-width="1"/>
         </g>
       </svg>
     </div>
@@ -324,18 +321,18 @@
 
   <div class="controls">
     <button class="btn" id="btn-comer" onclick="alimentar()">
-      <span class="btn-icon">🍖</span>
-      <span>Comer</span>
+      <span class="btn-icon">🥣</span>
+      <span>Alimentar</span>
     </button>
     <button class="btn" id="btn-jugar" onclick="jugar()">
-      <span class="btn-icon">🎾</span>
+      <span class="btn-icon">🥏</span>
       <span>Jugar</span>
     </button>
   </div>
 
   <script>
-    let hambre = parseInt(localStorage.getItem('piru_caniche_hambre')) || 100;
-    let felicidad = parseInt(localStorage.getItem('piru_caniche_felicidad')) || 100;
+    let hambre = parseInt(localStorage.getItem('dogui_hambre')) || 100;
+    let felicidad = parseInt(localStorage.getItem('dogui_felicidad')) || 100;
 
     const fillHambre = document.getElementById('fill-hambre');
     const fillFelicidad = document.getElementById('fill-felicidad');
@@ -348,35 +345,34 @@
     const stageArea = document.getElementById('stage-area');
 
     const frasesComer = [
-      "🍖 ¡Guau, qué delicioso hueso!",
-      "🐶 ¡Ñam ñam, gracias por la comida!",
-      "😋 ¡Mi pancita caniche está feliz!",
-      "🦴 ¡Delicioso, quiero otro!"
+      "🥣 ¡Mmm... qué rica comida!",
+      "🐶 ¡Guau, gracias por mi alimento!",
+      "😋 ¡Mi pancita está muy contenta!",
+      "🥣 ¡Ñam ñam, qué rico!"
     ];
 
     const frasesJugar = [
-      "🎾 ¡Guau guau! ¡Me encanta la pelota!",
-      "🐾 ¡Qué divertido correr contigo!",
-      "🎾 ¡Atrapé el juguete con mis patitas!",
-      "🏃‍♂️ ¡Eres el mejor dueño!"
+      "🥏 ¡Guau! ¡Atrapé el frisbee en el aire!",
+      "🐾 ¡Me encanta correr contigo!",
+      "🥏 ¡Qué divertido juego!",
+      "🏃‍♂️ ¡Eres el mejor compañero!"
     ];
 
     const sabiduriaCanina = [
-      "💡 Cuidado real: El pelaje rizado del Caniche no suelta casi pelo, pero necesita cepillado frecuente para evitar nudos.",
-      "💡 Cuidado real: Nunca les des chocolate, uvas, cebolla ni xilitol (edulcorante), ya que son altamente tóxicos para los perros.",
-      "💡 Cuidado real: Los caniches son perros muy inteligentes; estimula su mente con juguetes interactivos diarios.",
-      "💡 Cuidado real: Limpia sus orejas colgantes de forma regular para prevenir otitis e infecciones por humedad.",
-      "💡 Cuidado real: Pasear al menos 30 a 45 minutos al día ayuda a canalizar toda su energía y mantener su peso ideal.",
-      "📜 Curiosidad: A pesar de asociarse con Francia, la raza del Caniche (Poodle) se originó originalmente en Alemania como perro de caza de patos.",
-      "📜 Curiosidad: La palabra 'Poodle' viene del alemán 'Pudelhund', que significa 'perro que salpica en el agua'.",
-      "📜 Curiosidad: Los caniches ocupan el segundo puesto en el ranking de inteligencia canina mundial.",
-      "📜 Curiosidad: Su famoso corte de pelo histórico no era estético: se diseñó para proteger sus articulaciones del agua fría mientras nadaban.",
-      "📜 Curiosidad: Tienen un sentido del olfato extraordinario y pueden distinguir miles de aromas diferentes."
+      "💡 Cuidado real: Los perros necesitan agua fresca y limpia disponible todo el día.",
+      "💡 Cuidado real: Nunca les des chocolate, uvas, cebolla ni ajo; son veneno para su salud.",
+      "💡 Cuidado real: Sacar a pasear a tu perro estimula su mente y previene la ansiedad en casa.",
+      "💡 Cuidado real: Cepillar su pelaje de forma regular mantiene su piel sana y sin enredos.",
+      "💡 Cuidado real: Los perros demuestran afecto buscando el contacto físico y moviendo la cola.",
+      "📜 Curiosidad: El sentido del olfato de un perro puede ser hasta 100.000 veces más potente que el humano.",
+      "📜 Curiosidad: Los perros sudan principalmente a través de las almohadillas de sus patas.",
+      "📜 Curiosidad: Mueven la cola hacia la derecha cuando están felices y hacia la izquierda si están inseguros.",
+      "📜 Curiosidad: Duermen aproximadamente la mitad de su vida entre siestas y horas nocturnas."
     ];
 
     function guardar() {
-      localStorage.setItem('piru_caniche_hambre', hambre);
-      localStorage.setItem('piru_caniche_felicidad', felicidad);
+      localStorage.setItem('dogui_hambre', hambre);
+      localStorage.setItem('dogui_felicidad', felicidad);
     }
 
     function mostrarTexto(msg) {
@@ -395,46 +391,46 @@
 
       if (hambre <= 0 || felicidad <= 0) {
         ojos.innerHTML = `
-          <path d="M 39 36 L 45 42" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
-          <path d="M 39 42 L 45 36" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
-          <path d="M 55 36 L 61 42" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
-          <path d="M 55 42 L 61 36" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 36 36 L 42 42" stroke="#1f110b" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 36 42 L 42 36" stroke="#1f110b" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 58 36 L 64 42" stroke="#1f110b" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 58 42 L 64 36" stroke="#1f110b" stroke-width="2" stroke-linecap="round"/>
         `;
-        boca.setAttribute('d', 'M 46 56 Q 50 51 54 56');
+        boca.setAttribute('d', 'M 45 56 Q 50 51 55 56');
         
         if (mensajePersonalizado) {
           mostrarTexto(mensajePersonalizado);
         } else if (hambre <= 0 && felicidad <= 0) {
-          mostrarTexto("😿 ¡Tengo hambre y tristeza! Toca 'Comer' 🍖 y 'Jugar' 🎾");
+          mostrarTexto("😿 ¡Tengo hambre y tristeza! Toca 'Alimentar' 🥣 y 'Jugar' 🥏");
         } else if (hambre <= 0) {
-          mostrarTexto("😾 ¡Tengo mucha hambre! Toca el botón 'Comer' 🍖");
+          mostrarTexto("😾 ¡Tengo mucha hambre! Toca 'Alimentar' 🥣");
         } else {
-          mostrarTexto("😿 Estoy triste... Presiona 'Jugar' 🎾");
+          mostrarTexto("😿 Estoy triste... Presiona 'Jugar' 🥏");
         }
       } else if (hambre < 40 || felicidad < 40) {
         ojos.innerHTML = `
-          <circle cx="42" cy="38" r="3" fill="#1e293b"/>
-          <circle cx="58" cy="38" r="3" fill="#1e293b"/>
+          <circle cx="39" cy="38" r="3" fill="#1f110b"/>
+          <circle cx="61" cy="38" r="3" fill="#1f110b"/>
         `;
-        boca.setAttribute('d', 'M 46 54 L 54 54');
+        boca.setAttribute('d', 'M 45 54 L 55 54');
         
         if (mensajePersonalizado) {
           mostrarTexto(mensajePersonalizado);
         } else if (hambre < 40 && felicidad < 40) {
-          mostrarTexto("🙀 Presiona 'Comer' 🍖 y 'Jugar' 🎾 para ponerme contento.");
+          mostrarTexto("🙀 Presiona 'Alimentar' 🥣 y 'Jugar' 🥏 para alegrarme.");
         } else if (hambre < 40) {
-          mostrarTexto("😾 ¡Siento un poco de hambre! Presiona 'Comer' 🍖");
+          mostrarTexto("😾 ¡Siento un poco de hambre! Presiona 'Alimentar' 🥣");
         } else {
-          mostrarTexto("😿 Me estoy aburriendo... Presiona 'Jugar' 🎾.");
+          mostrarTexto("😿 Me estoy aburriendo... Presiona 'Jugar' 🥏.");
         }
       } else {
         ojos.innerHTML = `
-          <circle cx="42" cy="38" r="3.5" fill="#1e293b"/>
-          <circle cx="40.8" cy="36.8" r="1" fill="#ffffff"/>
-          <circle cx="58" cy="38" r="3.5" fill="#1e293b"/>
-          <circle cx="56.8" cy="36.8" r="1" fill="#ffffff"/>
+          <circle cx="39" cy="38" r="4" fill="#1f110b"/>
+          <circle cx="37.8" cy="36.8" r="1.2" fill="#ffffff"/>
+          <circle cx="61" cy="38" r="4" fill="#1f110b"/>
+          <circle cx="59.8" cy="36.8" r="1.2" fill="#ffffff"/>
         `;
-        boca.setAttribute('d', 'M 46 53 Q 50 57 54 53');
+        boca.setAttribute('d', 'M 45 53 Q 50 57 55 53');
         if (mensajePersonalizado) {
           mostrarTexto(mensajePersonalizado);
         }
@@ -463,16 +459,16 @@
       if (felicidad < 20) felicidad = Math.min(100, felicidad + 10);
       guardar();
 
-      const bone = document.createElement('div');
-      bone.className = 'animated-item anim-bone';
-      bone.innerText = '🍖';
-      stageArea.appendChild(bone);
+      const bowl = document.createElement('div');
+      bowl.className = 'animated-item anim-bowl';
+      bowl.innerText = '🥣';
+      stageArea.appendChild(bowl);
 
       boca.setAttribute('d', 'M 45 52 Q 50 60 55 52');
 
       setTimeout(() => {
         triggerAnim('eat-wiggle');
-        bone.remove();
+        bowl.remove();
         actualizarInterfaz(obtenerElementoAleatorio(frasesComer));
       }, 500);
     }
@@ -482,17 +478,17 @@
       hambre = Math.max(0, hambre - 5);
       guardar();
 
-      const ball = document.createElement('div');
-      ball.className = 'animated-item anim-ball';
-      ball.innerText = '🎾';
-      stageArea.appendChild(ball);
+      const frisbee = document.createElement('div');
+      frisbee.className = 'animated-item anim-frisbee';
+      frisbee.innerText = '🥏';
+      stageArea.appendChild(frisbee);
 
       setTimeout(() => {
         triggerAnim('catch-ball');
       }, 200);
 
       setTimeout(() => {
-        ball.remove();
+        frisbee.remove();
         actualizarInterfaz(obtenerElementoAleatorio(frasesJugar));
       }, 700);
     }
