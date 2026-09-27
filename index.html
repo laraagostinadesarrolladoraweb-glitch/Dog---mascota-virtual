@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Doggie - Mi Mascota Virtual</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent; /* Elimina el recuadro azul al tocar en móviles */
+      -webkit-touch-callout: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #f0fdf4 0%, #dcfce7 100%);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 16px max(20px, env(safe-area-inset-bottom));
+    }
+
+    .bg-particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: floatBg 8s infinite ease-in-out;
+    }
+
+    @keyframes floatBg {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+      50% { transform: translateY(-30px) scale(1.1); opacity: 0.9; }
+    }
+
+    .top-panel {
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 20;
+    }
+
+    .nombre-mascota {
+      color: #15803d;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .barras-container {
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 14px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(21, 128, 61, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .barra-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .barra-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #166534;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .progreso-track {
+      background: #bbf7d0;
+      height: 10px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progreso-fill {
+      height: 100%;
+      width: 100%;
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+
+    #fill-hambre { background: linear-gradient(90deg, #34d399, #10b981); }
+    #fill-felicidad { background: linear-gradient(90deg, #38bdf8, #0284c7); }
+
+    .stage {
+      flex: 1;
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .speech-bubble {
+      background: #ffffff;
+      color: #166534;
+      padding: 10px 16px;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 1.4;
+      box-shadow: 0 6px 16px rgba(21, 128, 61, 0.1);
+      margin-bottom: 12px;
+      position: relative;
+      border: 2px solid #22c55e;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px 8px 0;
+      border-style: solid;
+      border-color: #ffffff transparent;
+    }
+
+    .michi-wrapper {
+      width: 160px;
+      height: 160px;
+      cursor: pointer;
+      position: relative;
+      animation: floatIdle 3.5s infinite ease-in-out;
+      outline: none; /* Elimina borde de enfoque predeterminado */
+    }
+
+    @keyframes floatIdle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .michi-wrapper.happy-bounce { animation: bounce 0.6s ease; }
+    .michi-wrapper.eat-wiggle { animation: chew 0.8s ease; }
+    .michi-wrapper.catch-ball { animation: catchJump 0.8s ease; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      30% { transform: translateY(-20px) scale(1.1, 0.9); }
+    }
+
+    @keyframes chew {
+      0%, 100% { transform: scale(1); }
+      30% { transform: scale(1.08, 0.92); }
+      60% { transform: scale(0.95, 1.05); }
+    }
+
+    @keyframes catchJump {
+      0% { transform: translateY(0); }
+      30% { transform: translateY(-25px) rotate(-8deg); }
+      100% { transform: translateY(0); }
+    }
+
+    .animated-item {
+      position: absolute;
+      font-size: 28px;
+      pointer-events: none;
+      z-index: 15;
+    }
+
+    .anim-bone { animation: dropBone 0.6s forwards; }
+    @keyframes dropBone {
+      0% { transform: translateY(-80px) scale(1.2); opacity: 1; }
+      100% { transform: translateY(10px) scale(0.4); opacity: 0; }
+    }
+
+    .anim-ball { animation: throwBall 0.8s forwards; }
+    @keyframes throwBall {
+      0% { transform: translate(-100px, 40px) scale(1); }
+      50% { transform: translate(-20px, -30px) scale(1.2); }
+      100% { transform: translate(0px, 10px) scale(0.2); opacity: 0; }
+    }
+
+    .shadow {
+      width: 100px;
+      height: 12px;
+      background: rgba(21, 128, 61, 0.15);
+      border-radius: 50%;
+      margin-top: 6px;
+    }
+
+    .controls {
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      gap: 12px;
+      background: #ffffff;
+      padding: 8px;
+      border-radius: 18px;
+      box-shadow: 0 6px 18px rgba(21, 128, 61, 0.15);
+      border: 2px solid #22c55e;
+      z-index: 20;
+    }
+
+    .btn {
+      flex: 1;
+      background: #dcfce7;
+      color: #166534;
+      border: none;
+      padding: 12px;
+      border-radius: 14px;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      touch-action: manipulation;
+      transition: background 0.2s ease, transform 0.1s ease;
+      outline: none;
+    }
+
+    .btn:active {
+      transform: scale(0.95);
+      background: #bbf7d0;
+    }
+
+    .btn-icon { font-size: 18px; }
+
+    .heart-particle {
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 1.2s forwards ease-out;
+      z-index: 30;
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0) scale(0.8); }
+      100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-particle" style="width: 70px; height: 70px; top: 10%; left: 5%;"></div>
+  <div class="bg-particle" style="width: 100px; height: 100px; top: 50%; right: 5%;"></div>
+
+  <div class="top-panel">
+    <div class="nombre-mascota">Piru (Caniche)</div>
+
+    <div class="barras-container">
+      <div class="barra-item">
+        <div class="barra-label"><span>Hambre</span><span id="txt-hambre">100%</span></div>
+        <div class="progreso-track"><div class="progreso-fill" id="fill-hambre"></div></div>
+      </div>
+      <div class="barra-item">
+        <div class="barra-label"><span>Felicidad</span><span id="txt-felicidad">100%</span></div>
+        <div class="progreso-track"><div class="progreso-fill" id="fill-felicidad"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage" id="stage-area">
+    <div class="speech-bubble" id="bocadillo">¡Guau! ¡Tócame para darme amor o aprender sobre caniches! 🐾</div>
+    
+    <!-- SVG de un Perro Caniche estilizado -->
+    <div class="michi-wrapper" id="michi-box" onclick="acariciar(event)">
+      <svg id="michi-svg" viewBox="0 0 100 100" width="100%" height="100%">
+        <!-- Orejas caídas y pomposas de caniche -->
+        <path d="M 32 45 C 20 50 20 70 28 75 C 32 78 36 65 35 55 Z" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5"/>
+        <path d="M 68 45 C 80 50 80 70 72 75 C 68 78 64 65 65 55 Z" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1.5"/>
+        
+        <!-- Cuerpo y cabeza rizada -->
+        <circle cx="50" cy="62" r="26" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+        <circle cx="50" cy="42" r="20" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+        
+        <!-- Copete clásico de caniche -->
+        <circle cx="50" cy="24" r="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+        
+        <!-- Hocico -->
+        <ellipse cx="50" cy="48" rx="10" ry="8" fill="#f1f5f9"/>
+        <ellipse cx="50" cy="45" rx="3" ry="2" fill="#1e293b"/>
+        
+        <!-- Ojos -->
+        <g id="ojos">
+          <circle cx="42" cy="38" r="3.5" fill="#1e293b"/>
+          <circle cx="40.8" cy="36.8" r="1" fill="#ffffff"/>
+          <circle cx="58" cy="38" r="3.5" fill="#1e293b"/>
+          <circle cx="56.8" cy="36.8" r="1" fill="#ffffff"/>
+        </g>
+        
+        <!-- Boca -->
+        <path id="boca" d="M 46 53 Q 50 57 54 53" fill="none" stroke="#1e293b" stroke-width="1.5" stroke-linecap="round"/>
+        
+        <!-- Patitas -->
+        <g id="patitas">
+          <ellipse cx="40" cy="83" rx="6" ry="5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+          <ellipse cx="60" cy="83" rx="6" ry="5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="shadow"></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn" id="btn-comer" onclick="alimentar()">
+      <span class="btn-icon">🍖</span>
+      <span>Comer</span>
+    </button>
+    <button class="btn" id="btn-jugar" onclick="jugar()">
+      <span class="btn-icon">🎾</span>
+      <span>Jugar</span>
+    </button>
+  </div>
+
+  <script>
+    let hambre = parseInt(localStorage.getItem('piru_caniche_hambre')) || 100;
+    let felicidad = parseInt(localStorage.getItem('piru_caniche_felicidad')) || 100;
+
+    const fillHambre = document.getElementById('fill-hambre');
+    const fillFelicidad = document.getElementById('fill-felicidad');
+    const txtHambre = document.getElementById('txt-hambre');
+    const txtFelicidad = document.getElementById('txt-felicidad');
+    const ojos = document.getElementById('ojos');
+    const boca = document.getElementById('boca');
+    const bocadillo = document.getElementById('bocadillo');
+    const michiBox = document.getElementById('michi-box');
+    const stageArea = document.getElementById('stage-area');
+
+    const frasesComer = [
+      "🍖 ¡Guau, qué delicioso hueso!",
+      "🐶 ¡Ñam ñam, gracias por la comida!",
+      "😋 ¡Mi pancita caniche está feliz!",
+      "🦴 ¡Delicioso, quiero otro!"
+    ];
+
+    const frasesJugar = [
+      "🎾 ¡Guau guau! ¡Me encanta la pelota!",
+      "🐾 ¡Qué divertido correr contigo!",
+      "🎾 ¡Atrapé el juguete con mis patitas!",
+      "🏃‍♂️ ¡Eres el mejor dueño!"
+    ];
+
+    const sabiduriaCanina = [
+      "💡 Cuidado real: El pelaje rizado del Caniche no suelta casi pelo, pero necesita cepillado frecuente para evitar nudos.",
+      "💡 Cuidado real: Nunca les des chocolate, uvas, cebolla ni xilitol (edulcorante), ya que son altamente tóxicos para los perros.",
+      "💡 Cuidado real: Los caniches son perros muy inteligentes; estimula su mente con juguetes interactivos diarios.",
+      "💡 Cuidado real: Limpia sus orejas colgantes de forma regular para prevenir otitis e infecciones por humedad.",
+      "💡 Cuidado real: Pasear al menos 30 a 45 minutos al día ayuda a canalizar toda su energía y mantener su peso ideal.",
+      "📜 Curiosidad: A pesar de asociarse con Francia, la raza del Caniche (Poodle) se originó originalmente en Alemania como perro de caza de patos.",
+      "📜 Curiosidad: La palabra 'Poodle' viene del alemán 'Pudelhund', que significa 'perro que salpica en el agua'.",
+      "📜 Curiosidad: Los caniches ocupan el segundo puesto en el ranking de inteligencia canina mundial.",
+      "📜 Curiosidad: Su famoso corte de pelo histórico no era estético: se diseñó para proteger sus articulaciones del agua fría mientras nadaban.",
+      "📜 Curiosidad: Tienen un sentido del olfato extraordinario y pueden distinguir miles de aromas diferentes."
+    ];
+
+    function guardar() {
+      localStorage.setItem('piru_caniche_hambre', hambre);
+      localStorage.setItem('piru_caniche_felicidad', felicidad);
+    }
+
+    function mostrarTexto(msg) {
+      bocadillo.innerText = msg;
+    }
+
+    function obtenerElementoAleatorio(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function actualizarInterfaz(mensajePersonalizado = null) {
+      fillHambre.style.width = hambre + '%';
+      fillFelicidad.style.width = felicidad + '%';
+      txtHambre.innerText = hambre + '%';
+      txtFelicidad.innerText = felicidad + '%';
+
+      if (hambre <= 0 || felicidad <= 0) {
+        ojos.innerHTML = `
+          <path d="M 39 36 L 45 42" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 39 42 L 45 36" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 55 36 L 61 42" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+          <path d="M 55 42 L 61 36" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+        `;
+        boca.setAttribute('d', 'M 46 56 Q 50 51 54 56');
+        
+        if (mensajePersonalizado) {
+          mostrarTexto(mensajePersonalizado);
+        } else if (hambre <= 0 && felicidad <= 0) {
+          mostrarTexto("😿 ¡Tengo hambre y tristeza! Toca 'Comer' 🍖 y 'Jugar' 🎾");
+        } else if (hambre <= 0) {
+          mostrarTexto("😾 ¡Tengo mucha hambre! Toca el botón 'Comer' 🍖");
+        } else {
+          mostrarTexto("😿 Estoy triste... Presiona 'Jugar' 🎾");
+        }
+      } else if (hambre < 40 || felicidad < 40) {
+        ojos.innerHTML = `
+          <circle cx="42" cy="38" r="3" fill="#1e293b"/>
+          <circle cx="58" cy="38" r="3" fill="#1e293b"/>
+        `;
+        boca.setAttribute('d', 'M 46 54 L 54 54');
+        
+        if (mensajePersonalizado) {
+          mostrarTexto(mensajePersonalizado);
+        } else if (hambre < 40 && felicidad < 40) {
+          mostrarTexto("🙀 Presiona 'Comer' 🍖 y 'Jugar' 🎾 para ponerme contento.");
+        } else if (hambre < 40) {
+          mostrarTexto("😾 ¡Siento un poco de hambre! Presiona 'Comer' 🍖");
+        } else {
+          mostrarTexto("😿 Me estoy aburriendo... Presiona 'Jugar' 🎾.");
+        }
+      } else {
+        ojos.innerHTML = `
+          <circle cx="42" cy="38" r="3.5" fill="#1e293b"/>
+          <circle cx="40.8" cy="36.8" r="1" fill="#ffffff"/>
+          <circle cx="58" cy="38" r="3.5" fill="#1e293b"/>
+          <circle cx="56.8" cy="36.8" r="1" fill="#ffffff"/>
+        `;
+        boca.setAttribute('d', 'M 46 53 Q 50 57 54 53');
+        if (mensajePersonalizado) {
+          mostrarTexto(mensajePersonalizado);
+        }
+      }
+    }
+
+    function triggerAnim(className) {
+      michiBox.classList.remove('happy-bounce', 'eat-wiggle', 'catch-ball');
+      void michiBox.offsetWidth;
+      michiBox.classList.add(className);
+    }
+
+    function spawnHeart(e) {
+      const heart = document.createElement('div');
+      heart.className = 'heart-particle';
+      heart.innerText = '💖';
+      const rect = michiBox.getBoundingClientRect();
+      heart.style.left = (e.clientX || (rect.left + rect.width / 2)) + 'px';
+      heart.style.top = (e.clientY || (rect.top + rect.height / 2)) + 'px';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1000);
+    }
+
+    function alimentar() {
+      hambre = Math.min(100, hambre + 25);
+      if (felicidad < 20) felicidad = Math.min(100, felicidad + 10);
+      guardar();
+
+      const bone = document.createElement('div');
+      bone.className = 'animated-item anim-bone';
+      bone.innerText = '🍖';
+      stageArea.appendChild(bone);
+
+      boca.setAttribute('d', 'M 45 52 Q 50 60 55 52');
+
+      setTimeout(() => {
+        triggerAnim('eat-wiggle');
+        bone.remove();
+        actualizarInterfaz(obtenerElementoAleatorio(frasesComer));
+      }, 500);
+    }
+
+    function jugar() {
+      felicidad = Math.min(100, felicidad + 25);
+      hambre = Math.max(0, hambre - 5);
+      guardar();
+
+      const ball = document.createElement('div');
+      ball.className = 'animated-item anim-ball';
+      ball.innerText = '🎾';
+      stageArea.appendChild(ball);
+
+      setTimeout(() => {
+        triggerAnim('catch-ball');
+      }, 200);
+
+      setTimeout(() => {
+        ball.remove();
+        actualizarInterfaz(obtenerElementoAleatorio(frasesJugar));
+      }, 700);
+    }
+
+    function acariciar(e) {
+      spawnHeart(e);
+      triggerAnim('happy-bounce');
+      if (hambre < 40 || felicidad < 40) {
+        actualizarInterfaz();
+      } else {
+        actualizarInterfaz(obtenerElementoAleatorio(sabiduriaCanina));
+      }
+    }
+
+    setInterval(() => {
+      if (hambre > 0 || felicidad > 0) {
+        hambre = Math.max(0, hambre - 2);
+        felicidad = Math.max(0, felicidad - 2);
+        guardar();
+        actualizarInterfaz();
+      }
+    }, 4000);
+
+    window.addEventListener('load', () => {
+      actualizarInterfaz();
+    });
+  </script>
+</body>
+</html>
